@@ -49,8 +49,9 @@ TRG = Field(tokenize = tokenize_en,
             batch_first = True)
 
 def prepare_data():
+    print("Prepare data..")
     train_data, valid_data, test_data = Multi30k.splits(exts = ('.de', '.en'), 
-                                                    fields = (SRC, TRG))
+                                                    fields = (SRC, TRG))    
     SRC.build_vocab(train_data, min_freq = 2)
     TRG.build_vocab(train_data, min_freq = 2)
 
@@ -58,6 +59,8 @@ def prepare_data():
         (train_data, valid_data, test_data), 
         batch_size = BATCH_SIZE,
         device = device)
+    
+    print("Finish preparing data..")
     return train_iterator, valid_iterator, test_iterator, train_data, valid_data, test_data
 
 def count_parameters(model):
